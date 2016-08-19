@@ -1,0 +1,9 @@
+{% extends "match_oligo/main.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+    <h1>Name and Comments</h1>
+    <form method="POST" class="uniForm">{% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}
