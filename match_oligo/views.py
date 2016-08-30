@@ -79,6 +79,7 @@ def import_excel_view(request):
                     chr_input_rev_seq = Seq.reverse_complement(chr_input_seq)
                     #use biopython to create reverse compiment of sequence
                     reference_info.extend(("Chromosome {}: {}-{}".format(chrom,loc_start,loc_stop),))
+                    reference_info.extend(("url: {}".format(url),))
                     ref_seq = ''
                     ref_rev_comp = ''
                     #create empty list of paste reference variables to prevent error in oligo search loop
