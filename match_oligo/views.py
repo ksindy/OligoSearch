@@ -5,7 +5,7 @@ from Bio.Seq import Seq
 import urllib.request
 import re
 
-from .forms import UploadFileForm, RefForm, ChrLocForm
+from .forms import UploadFileForm, RefForm, ChrLocForm, ColumnDropForm
 #Access forms from forms.py
 
 def import_excel_view(request):
@@ -19,11 +19,12 @@ def import_excel_view(request):
         form1 = UploadFileForm(request.POST, request.FILES)
         form2 = RefForm(request.POST)
         form3 = ChrLocForm(request.POST)
+        form4 = ColumnDropForm(request.POST)
         #handles assigned to user submitted data for each form.
         ValidForm1 = False
         #Grants entry into oligo search loop if True
 
-        if form1.is_valid() and (form2.is_valid() or form3.is_valid()):
+        if form1.is_valid() and (form4.is_valid()) and (form2.is_valid() or form3.is_valid()):
         #Validates user input for oligo files and at least one reference
 
             check = (form2.is_valid()), (form3.is_valid())
@@ -35,6 +36,10 @@ def import_excel_view(request):
             if form1.is_valid():
                 oligo_input =  request.FILES.getlist('file')
                 #Accesses 'file' from match_oligo/forms.py and uses .getlist to access all items in the MultiValueDict
+                oligo_column_input = request.POST['oligo_column']
+                name_column_input = request.POST['name_column']
+                print(oligo_column_input)
+                print(name_column_input)
                 name_match_list = []
                 sheet_info_list = []
                 reference_info = []
@@ -96,8 +101,6 @@ def import_excel_view(request):
                 saw_file = 0
                 #reset- if first time seeing a file (saw_file = 0) name of file will be displayed
                 oligo_row = 0
-                oligo_col = 2
-                name_col = 0
                 #variables assigned to row and columns of excel input and needs to be reset for each file
 
                 book = xlrd.open_workbook(file_contents=xlsfile.read())
@@ -116,7 +119,7 @@ def import_excel_view(request):
 
                 for oligo in range(sheet.nrows):
                 #iterates through items in identified file/sheet
-                    cell = sheet.cell_value(rowx=oligo_row, colx=oligo_col)
+                    cell = sheet.cell_value(rowx=oligo_row, colx=int(oligo_column_input))
                     #using above variables, sets handle to the cell in the current sheet/file where match search will begin
 
 
@@ -133,7 +136,7 @@ def import_excel_view(request):
                             #if there is no match (-1), go to next row (add +1 to oligo_row)
                         elif oligo_find != -1 or oligo_find_url != -1 or oligo_rev_find != -1 or oligo_rev_find_url != -1:
                         #if there is a match (not -1, any other number is the index of the match), set handle to that cell name
-                            name = sheet.cell_value(rowx=oligo_row, colx=name_col)
+                            name = sheet.cell_value(rowx=oligo_row, colx=int(name_column_input))
                             #assign handle to cell with match
                             name_match = str(name)
                             #create string from cell name
@@ -155,5 +158,6 @@ def import_excel_view(request):
         form1 = UploadFileForm()
         form2 = RefForm()
         form3 = ChrLocForm()
+        form4 = ColumnDropForm()
 
-    return render(request, 'match_oligo/user_input.html', {'form1': form1, 'form2': form2, 'form3':form3})
+    return render(request, 'match_oligo/user_input.html', {'form1': form1, 'form2': form2, 'form3':form3, 'form4':form4, })

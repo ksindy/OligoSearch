@@ -4,7 +4,10 @@
     <h4>Oligo Search <small> This program searches for exact matches of oligo sequences within a larger "reference" sequence. Spaces and caps are ignored, reverse compliment is also searched. The user can upload multple oligo files (xls/xlsx only).</small></h4>
     <form class="uniForm" enctype="multipart/form-data" method="POST">
         {% csrf_token %}
-        {{ form1|crispy}}
+        {{ form1|crispy }}
+        <div class = "form-inline">
+        {{ form4|crispy }}
+        </div>
     	{{ form2|crispy }}
       <h4>OR... <small> Input the chromsome number, start and stop location of the area of the hg19 genome. </small></h4>
         <div class = "form-inline">
