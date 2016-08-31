@@ -38,8 +38,6 @@ def import_excel_view(request):
                 #Accesses 'file' from match_oligo/forms.py and uses .getlist to access all items in the MultiValueDict
                 oligo_column_input = request.POST['oligo_column']
                 name_column_input = request.POST['name_column']
-                print(oligo_column_input)
-                print(name_column_input)
                 name_match_list = []
                 sheet_info_list = []
                 reference_info = []

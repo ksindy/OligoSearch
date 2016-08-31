@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm, Textarea
 
 class UploadFileForm(forms.Form):
     file = forms.FileField(widget=forms.FileInput(attrs={'multiple': True}), label = 'Upload Oligo File(s):')
@@ -24,19 +25,21 @@ NAME_COLUMN = (
     (5, 'F'),
 )
 class ColumnDropForm(forms.Form):
-    oligo_column = forms.ChoiceField(choices=OLIGO_COLUMN, required=True)
-    name_column = forms.ChoiceField(choices=NAME_COLUMN, required=True)
+    oligo_column = forms.ChoiceField(choices=OLIGO_COLUMN, required=True, label='oligo')
+    name_column = forms.ChoiceField(choices=NAME_COLUMN, required=True, label='name')
 
 from .models import ref_model_input
 
-class RefForm(forms.ModelForm):
+class RefForm(ModelForm):
     class Meta:
         model = ref_model_input
         fields = ('reference',)
-        labels = {'reference': ('Enter Reference Sequence:')}
+        widgets = {
+            'reference':Textarea(attrs={'placeholder': 'Eg. tatattcaccacatgtaaaactttatttatgcataaaaccaccacacacacacaacctacacaaggaatgtgc agtcctgagtctatttagctacatgtgagtatatactccataaggcatataaaaccagtgcacagaaaatgcatccagatattaatatatctacattttaaaactgcatggaaaatacattattatatatacacaaagtgcatacctacccaatgtatggaaaatatattctgtgagttgtgtttatatacatactgtgtgtgtactaaatacattgaaattgcatt'})
+        }
+        labels = {'reference': ('Enter Reference Sequence')}
 
 class ChrLocForm(forms.Form):
-    chr = forms.CharField(label= "Chromosome Number")
-    loc_start = forms.IntegerField(label= "Start Base Location")
-    loc_stop = forms.IntegerField(label="Stop Base Location")
-
+    chr = forms.CharField(label= "Chromosome Number", widget=forms.TextInput(attrs={'placeholder': 'Eg. 12'}))
+    loc_start = forms.IntegerField(label= "Start Base Location", widget=forms.TextInput(attrs={'placeholder': 'Eg. 54356092'}))
+    loc_stop = forms.IntegerField(label="Stop Base Location", widget=forms.TextInput(attrs={'placeholder': 'Eg. 54368740'}))

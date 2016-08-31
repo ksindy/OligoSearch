@@ -2,14 +2,19 @@
 {% block content %}
 {% load crispy_forms_tags %}
     <h4>Oligo Search <small> This program searches for exact matches of oligo sequences within a larger "reference" sequence. Spaces and caps are ignored, reverse compliment is also searched. The user can upload multple oligo files (xls/xlsx only).</small></h4>
+        <div class="dropdown">
+      <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <form class="uniForm" enctype="multipart/form-data" method="POST">
         {% csrf_token %}
         {{ form1|crispy }}
-        <div class = "form-inline">
-        {{ form4|crispy }}
-        </div>
+        <h4><small> Select the column for the oligo and the name of oligo. The default is column C for the oligo and A for the name. </small></h4>
+          {{ form4 }}
+    </div>
+        <br>
+        <div class="dropdown">
+      <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     	{{ form2|crispy }}
-      <h4>OR... <small> Input the chromsome number, start and stop location of the area of the hg19 genome. </small></h4>
+      <h4>OR...<small> Input the chromsome number, start and stop location of the area of the hg19 genome. Accesses the UCSC DAS database. </small></h4>
         <div class = "form-inline">
         {{ form3|crispy }}
         </div>
