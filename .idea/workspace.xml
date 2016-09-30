@@ -606,7 +606,13 @@
       <option name="project" value="LOCAL" />
       <updated>1475247224688</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Notebook wording.">
+      <created>1475247684736</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1475247684736</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView">
