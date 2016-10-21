@@ -8,3 +8,4 @@ class ref_model_input(models.Model):
 
     def __str__(self):
         return '%s' % (self.reference,)
+
