@@ -21,5 +21,4 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^contact/', include('contact.urls')),
     url(r'^oligo/', include('match_oligo.urls', namespace='oligo')),
-    url(r'^conversions/', include('sequence_conversions.urls', namespace='conversions'))
     ]
