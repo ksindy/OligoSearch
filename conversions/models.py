@@ -1,3 +1,5 @@
 from django.db import models
 
-# Create your models here.
+class conversions(models.Model):
+    sequence_input = models.TextField()
+

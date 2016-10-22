@@ -4,5 +4,5 @@ from . import views
 app_name = 'conversions'
 
 urlpatterns = [
-    url(r'^$', views.import_excel_view),
+    url(r'^$', views.test),
     ]

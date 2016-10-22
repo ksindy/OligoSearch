@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'contact',
     'crispy_forms',
     'match_oligo',
+    'conversions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
