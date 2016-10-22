@@ -2,3 +2,11 @@
 {% block content %}
 {% load crispy_forms_tags %}
     <h4>Sequence Conversions.</h4>
+    <form class="uniForm" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        {{ form1|crispy }}
+
+    </form>
+
+
+{% endblock %}
