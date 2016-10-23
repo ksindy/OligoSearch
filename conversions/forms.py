@@ -1,11 +1,11 @@
 #from django import forms
 from django.forms import ModelForm, Textarea
-#from .models import ref_model_input
+from .models import conversions
 
-class RefForm(ModelForm):
+class sequence_input(ModelForm):
     class Meta:
-        #model = ref_model_input
-        fields = ('reference',)
+        model = conversions
+        fields = ('sequence_input',)
         widgets = {
             'reference':Textarea(attrs={'placeholder': 'Eg. tatattcaccacatgtaaaactttatttatgcataaaaccaccacacacacacaacctacacaaggaatgtgc agtcctgagtctatttagctacatgtgagtatatactccataaggcatataaaaccagtgcacagaaaatgcatccagatattaatatatctacattttaaaactgcatggaaaatacattattatatatacacaaagtgcatacctacccaatgtatggaaaatatattctgtgagttgtgtttatatacatactgtgtgtgtactaaatacattgaaattgcatt'})
         }
