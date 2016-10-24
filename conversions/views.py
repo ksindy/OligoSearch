@@ -8,7 +8,9 @@ def reverse_complement(text):
     return reverse_complement_text
 
 def test(request):
-    if request.method == "POST":
+    if (request.POST.get('Upper Case')):
+        print('yes')
+    if (request.POST.get('Reverse Complement')):
         print('pass if')
         form1 = sequence_input(request.POST)
         if form1.is_valid():
