@@ -1,7 +1,7 @@
 {% extends "match_oligo/main.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
-    <h4>Sequence Conversions.</h4>
+    <h4>Simple Sequence Conversions.<small>Reverse complement removes spaces, ignore special characters and converts to caps.</small></h4>
 
     <form method="post">
     {% csrf_token %}
@@ -13,14 +13,15 @@
 
     {% for c in output %}
         <p> {{c}}<p>
-
     {% empty %}
-
-    <p>  <p>
+    <p> <p>
 
     {% endfor %}
-</form>
 
+    </form>
+    <br>
+    <h4>Curious if there is a particular pattern within the above sequence. Input it here.</h4>
 
-
+    <br>
+    <h4>Don't know the pattern? How long is the pattern?</h4>
 {% endblock %}
