@@ -8,8 +8,10 @@
     {{ form1|crispy }}
     <input type="submit" class="btn" value="Reverse Complement" name="Reverse Complement">
     <input type="submit" class="btn" value="Upper Case" name="Upper Case">
+    <input type="submit" class="btn" value="Lower Case" name="Lower Case">
+    <input type="submit" class="btn" value="Remove Spaces" name="Remove Spaces">
 
-    {% for c in rc_output %}
+    {% for c in output %}
         <p> {{c}}<p>
 
     {% empty %}
