@@ -1,4 +1,5 @@
 from django.shortcuts import render
+#from django import forms
 from .forms import sequence_input
 
 def reverse_complement(text):
@@ -8,10 +9,12 @@ def reverse_complement(text):
 
 def test(request):
     if request.method == "POST":
-        form1 = sequence_input(request.POST, request.FILES)
-        if(request.GET.get('rc-btn')):
-            reverse_complement(form1)
-        return render(request, 'conversions/rc_output.html')
+        print('pass if')
+        form1 = sequence_input(request.POST)
+        if form1.is_valid():
+            sequence = (form1.cleaned_data['sequence_input']).upper().replace(" ","")
+            rc_result = reverse_complement(sequence)
+        return render(request, 'conversions/conversions_input.html', {'rc_output': rc_result, 'form1': form1})
     else:
         form1 = sequence_input()
     return render (request, 'conversions/conversions_input.html', {'form1': form1})

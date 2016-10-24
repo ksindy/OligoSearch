@@ -2,15 +2,23 @@
 {% block content %}
 {% load crispy_forms_tags %}
     <h4>Sequence Conversions.</h4>
-    <form class="uniForm" enctype="multipart/form-data" method="POST">
-        {% csrf_token %}
-        {{ form1|crispy }}
 
-    </form>
+    <form method="post">
+    {% csrf_token %}
+    {{ form1 }}
+    <input type="submit" value="Submit" />
 
-    <form action="#" method="get">
-        <input type="submit" class="btn" value="Reverse Complement" name="rc-btn">
-    </form>
+
+    {% for c in rc_output %}
+        <p> {{c}}<p>
+
+    {% empty %}
+
+    <p>  <p>
+
+    {% endfor %}
+</form>
+
 
 
 {% endblock %}
