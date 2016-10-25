@@ -3,8 +3,9 @@ from django.shortcuts import render
 from .forms import user_sequence_input, pattern_input
 
 def reverse_complement(text):
-    text = text[::-1].upper().replace(' ','')
-    reverse_complement_text = text.translate(str.maketrans('ACGT','TGCA'))
+    #text = text[::-1].upper().replace(' ','')
+    text = text[::-1]
+    reverse_complement_text = text.translate(str.maketrans('ACGTacgt','TGCAtgca'))
     return reverse_complement_text
 
 def test(request):
@@ -18,17 +19,28 @@ def test(request):
                 result = reverse_complement(sequence)
                 sequence_list.append(result)
             if (request.POST.get('Upper Case')):
-                result = (form1.cleaned_data['sequence']).upper()
-                sequence_list.append(result)
+                if sequence_list:
+                    result = sequence_list[0].upper()
+                    sequence_list[0] = result
+                else:
+                    result = (form1.cleaned_data['sequence']).upper()
+                    sequence_list.append(result)
             if (request.POST.get('Lower Case')):
-                result = (form1.cleaned_data['sequence']).lower()
-                sequence_list.append(result)
+                if sequence_list:
+                    result = sequence_list[0].lower()
+                    sequence_list[0] = result
+                else:
+                    result = (form1.cleaned_data['sequence']).lower()
+                    sequence_list.append(result)
             if (request.POST.get('Remove Spaces')):
-                result = (form1.cleaned_data['sequence']).replace(" ","")
-                sequence_list.append(result)
+                if sequence_list:
+                    result = sequence_list[0].replace(" ","")
+                    sequence_list[0] = result
+                else:
+                    result = (form1.cleaned_data['sequence']).replace(" ","")
+                    sequence_list.append(result)
         if form2.is_valid():
-            print('test')
-
+            print(sequence_list)
         return render(request, 'conversions/conversions_input.html', {'output': sequence_list, 'form1': form1})
     else:
         form1 = user_sequence_input()

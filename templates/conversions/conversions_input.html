@@ -6,11 +6,16 @@
     <form method="post">
     {% csrf_token %}
     {{ form1|crispy }}
-    <input type="submit" class="btn" value="Reverse Complement" name="Reverse Complement">
-    <input type="submit" class="btn" value="Upper Case" name="Upper Case">
-    <input type="submit" class="btn" value="Lower Case" name="Lower Case">
-    <input type="submit" class="btn" value="Remove Spaces" name="Remove Spaces">
-
+    <input type="checkbox" value="Reverse Complement" name="Reverse Complement">
+    <small>reverse complement</small>
+    <input type="checkbox" value="Upper Case" name="Upper Case">
+    <small>upper case</small>
+    <input type="checkbox" value="Lower Case" name="Lower Case">
+    <small>lower case</small>
+    <input type="checkbox" class="btn" value="Remove Spaces" name="Remove Spaces">
+    <small>remove spaces</small>
+    <input type="submit" class="btn" value="Submit" name="Submit">
+    
     {% for c in output %}
         <p> {{c}}<p>
     {% empty %}
