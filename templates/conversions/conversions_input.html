@@ -1,19 +1,21 @@
 {% extends "match_oligo/main.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
-    <h4>Simple Sequence Conversions.<small>Reverse complement removes spaces, ignore special characters and converts to caps.</small></h4>
+    <h4>Sequence Conversions</h4>
 
     <form method="post">
     {% csrf_token %}
     {{ form1|crispy }}
     <input type="checkbox" value="Reverse Complement" name="Reverse Complement">
-    <small>reverse complement</small>
+    <large>Reverse Complement</large>
     <input type="checkbox" value="Upper Case" name="Upper Case">
-    <small>upper case</small>
+    <large>Upper Case</large>
     <input type="checkbox" value="Lower Case" name="Lower Case">
-    <small>lower case</small>
+    <large>Lower Case</large>
     <input type="checkbox" class="btn" value="Remove Spaces" name="Remove Spaces">
-    <small>remove spaces</small>
+    <large>Remove Spaces</large>
+    <br>
+    <br>
     <input type="submit" class="btn" value="Submit" name="Submit">
     
     {% for c in output %}

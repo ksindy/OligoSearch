@@ -3,7 +3,6 @@ from django.shortcuts import render
 from .forms import user_sequence_input, pattern_input
 
 def reverse_complement(text):
-    #text = text[::-1].upper().replace(' ','')
     text = text[::-1]
     reverse_complement_text = text.translate(str.maketrans('ACGTacgt','TGCAtgca'))
     return reverse_complement_text
