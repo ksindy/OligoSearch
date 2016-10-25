@@ -1,6 +1,7 @@
 from django.shortcuts import render
 #from django import forms
 from .forms import user_sequence_input, pattern_input
+import re
 
 def reverse_complement(text):
     text = text[::-1]
@@ -39,8 +40,10 @@ def test(request):
                     result = (form1.cleaned_data['sequence']).replace(" ","")
                     sequence_list.append(result)
         if form2.is_valid():
-            print(sequence_list)
-        return render(request, 'conversions/conversions_input.html', {'output': sequence_list, 'form1': form1})
+            print('enter last')
+            bold = print ('\033[0m'  + 'AAGG')
+            print(bold)
+        return render(request, 'conversions/conversions_input.html', {'output': sequence_list, 'form1': form1, 'form2': form2, 'output2': bold})
     else:
         form1 = user_sequence_input()
     return render (request, 'conversions/conversions_input.html', {'form1': form1, 'form2':form2})

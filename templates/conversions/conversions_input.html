@@ -1,7 +1,7 @@
 {% extends "match_oligo/main.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
-    <h4>Sequence Conversions</h4>
+    <h4>Sequence Manipulations</h4>
 
     <form method="post">
     {% csrf_token %}
@@ -27,10 +27,16 @@
 
     </form>
     <br>
-    <h4>Curious if there is a particular pattern within the above sequence. Input it here.</h4>
+    <h4>Looking for a particular pattern in the sequence above?</h4>
 
     {{ form2|crispy }}
 
+    {% for d in output2 %}
+        <p> {{d}}<p>
+    {% empty %}
+    <p> <p>
+     {% endfor %}
+
     <br>
-    <h4>Don't know the pattern? How long is the pattern?</h4>
+    <h4>Don't know the pattern but want to know if there are repetitive elements?</h4>
 {% endblock %}
