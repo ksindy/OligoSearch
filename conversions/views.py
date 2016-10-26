@@ -8,6 +8,21 @@ def reverse_complement(text):
     reverse_complement_text = text.translate(str.maketrans('ACGTacgt','TGCAtgca'))
     return reverse_complement_text
 
+def mismatch (string1, string2):
+    mismatches = 0
+    for (nucleotide1, nucleotide2) in zip(string1, string2):
+        if nucleotide1 != nucleotide2:
+            mismatches += 1
+    return(mismatches)
+
+def approximate_patterns(text, pattern, max_mismatches):
+    pattern_matches = []
+    for i in range(len(text)-len(pattern)+1):
+        query_pattern = text[i:i+len(pattern)]
+        if mismatch(pattern, query_pattern) <= max_mismatches:
+            pattern_matches.append(i)
+    return(pattern_matches)
+
 def test(request):
     if request.method == "POST":
         form1 = user_sequence_input(request.POST)
@@ -40,9 +55,10 @@ def test(request):
                     result = (form1.cleaned_data['sequence']).replace(" ","")
                     sequence_list.append(result)
         if form2.is_valid():
-            print('enter last')
-            bold = '<b>Car</b>s '
-            print(bold)
+            text = (form1.cleaned_data['sequence'])
+            pattern = (form2.cleaned_data['pattern'])
+            pattern_found = approximate_patterns(text,pattern ,0)
+            bold = pattern_found
         return render(request, 'conversions/conversions_input.html', {'output': sequence_list, 'form1': form1, 'form2': form2, 'output2': bold})
     else:
         form1 = user_sequence_input()

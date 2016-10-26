@@ -18,6 +18,7 @@
     <br>
     <input type="submit" class="btn" value="Submit" name="Submit">
 
+
     {% for c in output %}
         <p> {{c}}<p>
     {% empty %}
@@ -25,17 +26,22 @@
 
     {% endfor %}
 
-    </form>
+
     <br>
     <h4>Looking for a particular pattern in the sequence above?</h4>
 
+
     {{ form2|crispy }}
 
-    {{ output2|safe  }}
 
+
+        <input type="submit" class="btn" value="Submit" name="Submit">
+    <br>
+        {{ output2|safe  }}
+    </form>
 
 
 
     <br>
-    <h4>Don't know the pattern but want to know if there are repetitive elements?</h4>
+
 {% endblock %}
