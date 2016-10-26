@@ -9,9 +9,9 @@ def reverse_complement(text):
     return reverse_complement_text
 
 def test(request):
-    form1 = user_sequence_input(request.POST)
-    form2 = pattern_input(request.POST)
     if request.method == "POST":
+        form1 = user_sequence_input(request.POST)
+        form2 = pattern_input(request.POST)
         if form1.is_valid():
             sequence_list = []
             if (request.POST.get('Reverse Complement')):
@@ -41,11 +41,12 @@ def test(request):
                     sequence_list.append(result)
         if form2.is_valid():
             print('enter last')
-            bold = print ('\033[0m'  + 'AAGG')
+            bold = '<b>Car</b>s '
             print(bold)
         return render(request, 'conversions/conversions_input.html', {'output': sequence_list, 'form1': form1, 'form2': form2, 'output2': bold})
     else:
         form1 = user_sequence_input()
+        form2 = pattern_input()
     return render (request, 'conversions/conversions_input.html', {'form1': form1, 'form2':form2})
 
 
