@@ -1,7 +1,9 @@
 {% extends "match_oligo/main.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
+
     <h4>Sequence Manipulations</h4>
+
 
     <form method="post">
     {% csrf_token %}
@@ -17,14 +19,16 @@
     <br>
     <br>
     <input type="submit" class="btn" value="Submit" name="Submit">
+     </form>
 
 
-    {% for c in output %}
-        <p> {{c}}<p>
-    {% empty %}
-    <p> <p>
+                {% for c in output %}
+                        <p>{{c|wordwrap:5}}</p>
 
-    {% endfor %}
+                {% empty %}
+                <p> <p>
+
+                {% endfor %}
 
 
     <br>

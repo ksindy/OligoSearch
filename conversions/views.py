@@ -16,11 +16,20 @@ def mismatch (string1, string2):
     return(mismatches)
 
 def approximate_patterns(text, pattern, max_mismatches):
-    pattern_matches = []
-    for i in range(len(text)-len(pattern)+1):
+    pattern_matches = ''
+    pattern_start = 0
+    pattern_end = 0
+    for i, base in enumerate(text):
         query_pattern = text[i:i+len(pattern)]
         if mismatch(pattern, query_pattern) <= max_mismatches:
-            pattern_matches.append(i)
+            pattern_matches += '<b>'
+            pattern_start = i
+            pattern_end = i + len(pattern)
+        if i == pattern_end and pattern_start != 0:
+            pattern_matches +='</b>'
+            pattern_start = 0
+            pattern_end = 0
+        pattern_matches += base
     return(pattern_matches)
 
 def test(request):
@@ -32,7 +41,9 @@ def test(request):
             if (request.POST.get('Reverse Complement')):
                 sequence = (form1.cleaned_data['sequence'])
                 result = reverse_complement(sequence)
+                result = str(result)
                 sequence_list.append(result)
+                print(type(sequence_list[0]))
             if (request.POST.get('Upper Case')):
                 if sequence_list:
                     result = sequence_list[0].upper()
@@ -57,8 +68,8 @@ def test(request):
         if form2.is_valid():
             text = (form1.cleaned_data['sequence'])
             pattern = (form2.cleaned_data['pattern'])
-            pattern_found = approximate_patterns(text,pattern ,0)
-            bold = pattern_found
+            bold = approximate_patterns(text, pattern, 0)
+
         return render(request, 'conversions/conversions_input.html', {'output': sequence_list, 'form1': form1, 'form2': form2, 'output2': bold})
     else:
         form1 = user_sequence_input()
