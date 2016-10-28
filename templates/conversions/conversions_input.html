@@ -21,14 +21,8 @@
     <input type="submit" class="btn" value="Submit" name="Submit">
 
 
+        {{ output|safe }}
 
-                {% for c in output %}
-                        <p>{{c|wordwrap:5}}</p>
-
-                {% empty %}
-                <p> <p>
-
-                {% endfor %}
 
 
     <br>
@@ -36,6 +30,9 @@
 
 
     {{ form2|crispy }}
+
+
+
 
 
 
