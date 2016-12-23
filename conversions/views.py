@@ -19,25 +19,40 @@ def approximate_patterns(text, pattern, max_mismatches):
     text = text.upper().replace(" ","")
     pattern = pattern.upper().replace(" ","")
     pattern_matches = ''
-    pattern_start = 0
+    #pattern_start = 0
     pattern_end = 0
+    pattern_found = False
+    add_base = False
     if pattern == '':
         return ('')
     else:
         for i, base in enumerate(text):
             pattern_matches += '<i></i>'
             query_pattern = text[i:i+len(pattern)]
-            if mismatch(pattern, query_pattern) <= max_mismatches:
-                pattern_matches += '<sup><b>'
-                pattern_start = i
-                pattern_end = i + len(pattern)
-            if i == pattern_end and pattern_start != 0:
-                pattern_matches +='</sup></b>'
-                pattern_start = 0
+            add_base = False
+
+            if mismatch(pattern, query_pattern) <= max_mismatches and not pattern_found:
+                pattern_matches += '<b>'
+                pattern_found = True
+                pattern_end = i + (len(pattern)-1)
+                print(i+1)
+
+            elif mismatch(pattern, query_pattern) <= max_mismatches and pattern_found:
+                pattern_end = i + (len(pattern)-1)
+                print(i+1)
+
+            if i == pattern_end and pattern_found:
+                pattern_matches += base
+                pattern_matches +='</b>'
                 pattern_end = 0
-            pattern_matches += base
+                add_base = True
+                pattern_found = False
+
+            if not add_base:
+                pattern_matches += base
 
         return(pattern_matches)
+
 
 def test(request):
     if request.method == "POST":
@@ -81,15 +96,14 @@ def test(request):
                     sequence_wrap += '<i></i>'
 
         if form2.is_valid():
-            print('enterform2')
             mismatch_choice = int(request.POST['mismatches'])
             text = (form1.cleaned_data['sequence'])
             pattern = (form2.cleaned_data['pattern'])
             bold = approximate_patterns(text, pattern, mismatch_choice)
             #bold = "<b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A"
             #<b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>G<b></b>T<b></b>C<b></b>A<b></b>A<b></b>T<b></b>C<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>C<b></b>C<b></b>T<b></b>G<b></b>A<b></b>T<b></b>C<b></b>G<b></b>C<b></b>T<b></b>A<b></b>C<b></b>A<b></b>G<b></b>T<b></b>T<b></b>G<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>T<b></b>G<b></b>G<b></b>T<b></b>T<b></b>C<b></b>C<b></b>T<b></b>A<b></b>C<b></b>C<b></b>T<b></b>T<b></b>T
-            print(bold)
-            print(pattern)
+            #print(bold)
+            #print(pattern)
 
         return render(request, 'conversions/conversions_input.html', {'output': sequence_wrap, 'form1': form1, 'form2': form2, 'output2': bold, 'form3':form3})
     else:
