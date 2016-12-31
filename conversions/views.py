@@ -19,7 +19,7 @@ def approximate_patterns(text, pattern, max_mismatches):
     text = text.upper().replace(" ","")
     pattern = pattern.upper().replace(" ","")
     pattern_matches = ''
-    #pattern_start = 0
+    pattern_location = ''
     pattern_end = 0
     pattern_found = False
     add_base = False
@@ -35,11 +35,11 @@ def approximate_patterns(text, pattern, max_mismatches):
                 pattern_matches += '<b>'
                 pattern_found = True
                 pattern_end = i + (len(pattern)-1)
-                print(i+1)
+                pattern_location += str(i+1)+','
 
             elif mismatch(pattern, query_pattern) <= max_mismatches and pattern_found:
                 pattern_end = i + (len(pattern)-1)
-                print(i+1)
+                pattern_location += str(i+1)+','
 
             if i == pattern_end and pattern_found:
                 pattern_matches += base
@@ -51,7 +51,7 @@ def approximate_patterns(text, pattern, max_mismatches):
             if not add_base:
                 pattern_matches += base
 
-        return(pattern_matches)
+        return(pattern_matches, pattern_location)
 
 
 def test(request):
@@ -105,7 +105,7 @@ def test(request):
             #print(bold)
             #print(pattern)
 
-        return render(request, 'conversions/conversions_input.html', {'output': sequence_wrap, 'form1': form1, 'form2': form2, 'output2': bold, 'form3':form3})
+        return render(request, 'conversions/conversions_input.html', {'output': sequence_wrap, 'form1': form1, 'form2': form2, 'output2': bold, 'form3':form3,})
     else:
         form1 = user_sequence_input()
         form2 = pattern_input()

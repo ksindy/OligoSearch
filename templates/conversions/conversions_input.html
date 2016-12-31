@@ -19,13 +19,11 @@
     <br>
     <br>
     <input type="submit" class="btn" value="Submit" name="Submit">
-
-
+    <br>
+    <br>
         {{ output|safe }}
 
 
-
-    <br>
     <h4>Looking for a sequence within the one above?</h4>
 
 
@@ -38,10 +36,20 @@
 
     <br>
     <input type="submit" class="btn" value="Submit" name="Submit">
-    <br>
-        {{ output2|safe  }}
-    </form>
 
+    <br>
+    <br>
+        <p id="demo"></p>
+        <script>
+            var match_results = output2
+            document.getElementbyID("demo").innerHTML = match_results;
+        </script>
+
+
+        {{ output2|safe  }}
+    <br>
+    <br>
+    </form>
 
 
     <br>
