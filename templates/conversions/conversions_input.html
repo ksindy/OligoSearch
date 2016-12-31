@@ -23,7 +23,8 @@
     <br>
         {{ output|safe }}
 
-
+    <br>
+    <br>
     <h4>Looking for a sequence within the one above?</h4>
 
 
@@ -39,14 +40,22 @@
 
     <br>
     <br>
-        <p id="demo"></p>
         <script>
-            var match_results = output2
-            document.getElementbyID("demo").innerHTML = match_results;
+        //document.write(5 + 6);
         </script>
 
+        <script>
+        //    document.write({{ output2|safe }})
+        </script>
+    <br>
+    <br>
+{% autoescape off %}
 
-        {{ output2|safe  }}
+
+
+    {{ output2|join:" "}}
+
+{% endautoescape %}
     <br>
     <br>
     </form>

@@ -35,11 +35,11 @@ def approximate_patterns(text, pattern, max_mismatches):
                 pattern_matches += '<b>'
                 pattern_found = True
                 pattern_end = i + (len(pattern)-1)
-                pattern_location += str(i+1)+','
+                pattern_location += str(i+1)+','+'\t'
 
             elif mismatch(pattern, query_pattern) <= max_mismatches and pattern_found:
                 pattern_end = i + (len(pattern)-1)
-                pattern_location += str(i+1)+','
+                pattern_location += str(i+1)+','+'\t'
 
             if i == pattern_end and pattern_found:
                 pattern_matches += base
@@ -51,7 +51,7 @@ def approximate_patterns(text, pattern, max_mismatches):
             if not add_base:
                 pattern_matches += base
 
-        return(pattern_matches, pattern_location)
+        return(pattern_location, pattern_matches )
 
 
 def test(request):
