@@ -1,7 +1,11 @@
 {% extends "match_oligo/main.html" %}
 {% block content %}
 {% load crispy_forms_tags %}
-    <h4>Oligo Search <small> This program searches for exact matches of oligo sequences within a larger "reference" sequence. Spaces and caps are ignored, reverse compliment is also searched. The user can upload multple oligo files (xls/xlsx only).</small></h4>
+    <div style=" width: 50%; margin-left: 25%; margin-right: 25%; margin-bottom: 75px;">
+    <h2 style="font-family: ClearSans-Thin; font-size: 250%; color: rgb(70, 70, 70); text-align: center;">Discover matches within a reference sequence. </h2>
+    <h3 style="font-family: ClearSans-Thin; font-size: 150%; color: rgb(70, 70, 70); text-align: center;">stored in excel sheets  You can search multiple excel documents at one time.</h3>
+        <!-- <h4>Oligo Search <small> This program searches for exact matches of oligo sequences within a larger "reference" sequence. Spaces and caps are ignored, reverse compliment is also searched. The user can upload multple oligo files (xls/xlsx only).</small></h4>-->
+</div>
         <div class="dropdown">
       <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <form class="uniForm" enctype="multipart/form-data" method="POST">

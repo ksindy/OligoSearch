@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load widget_tweaks %}
+    <meta charset="UTF-8">
+    <title>MolBio Tools</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+    .w3-navbar,h1,button {font-family: "Montserrat", sans-serif}
+    .fa-navicon,.fa-file-excel-o {font-size:100px}
+    </style>
+</head>
+
+<body>
+<!-- Header -->
+<header class="w3-container w3-red w3-center w3-padding-128">
+  <h1 class="w3-margin w3-jumbo">Discover Alignments</h1>
+  <!--<p class="w3-xlarge">Find matches within a reference from text or excel sheets.</p>-->
+  <!--<button class="w3-btn w3-padding-16 w3-large w3-margin-top">Get Started</button>-->
+</header>
+
+<!-- Result Grid -->
+<div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
+    <div class="w3-content">
+        <div class="w3-twothird">
+
+    <h1 class="w3-margin w3-xlarge">Results</h1>
+    <h5 class="w3-padding-4">
+    <a name="results"></a>
+    {% autoescape off %}
+    {{ bold|join:" "}}
+    {% endautoescape %}</h5>
+    {% block content %}
+    {% endblock %}
+</div>
+    </div>
+    <div class="w3-third w3-center">
+	<i class="fa fa-pencil" style="font-size: 190px"></i>
+
+</div>
+    </div>
+
+<!-- First Grid -->
+<div class="w3-row-padding w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-twothird">
+
+        <h1>Reference</h1>
+        <h5 class="w3-padding-4">Find alignments within a reference sequence. You will have the option to designate the number of allowed mismatches.</h5>
+        <h5 class="w3-padding-4">Copy and paste your reference sequence here.</h5>
+
+    <form class="uniForm" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        {% render_field chromosome_form.reference rows="6" cols="78" %}
+
+
+
+
+    <h3 class="w3-padding-10">Or </h3>
+      <h5 class="w3-padding-10"> Type the chromosome number, start and stop location. This will access the hg19 genome of the UCSC DAS database.</h5>
+
+
+       {% render_field chromosome_form.chr%}
+       {% render_field chromosome_form.loc_start%}
+       {% render_field chromosome_form.loc_stop%}
+
+
+
+    </div>
+  </div>
+          <div class="w3-third w3-center">
+      <i class="fa fa-flask" style="font-size: 190px"></i>
+    </div>
+</div>
+
+<!-- Second Grid -->
+<div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+  <div class="w3-content">
+    <div class="w3-third w3-center">
+	<i class="fa fa-navicon w3-padding-64 w3-text-red w3-margin-right"></i>
+	<i class="fa fa-file-excel-o w3-padding-64 w3-text-red w3-margin-right"></i>
+
+    </div>
+
+    <div class="w3-twothird">
+      <h1>Oligo</h1>
+      <h5 class="w3-padding-0">Enter a sequence to search for within the above reference. </h5>
+        <h5 class="w3-padding-4">Special character and caps will be ignored. Reverse compliment is also searched. </h5>
+
+
+           {% render_field user_input_oligo.sequence rows="1" cols="60"%}
+
+    <h3 class="w3-padding-10">Or </h3>
+
+      <h5 class="w3-padding-10"> Upload excel document(s).</h5>
+
+
+       {% render_field upload.file %}
+
+
+
+
+        {% render_field col_drop.oligo_column %}
+        {% render_field col_drop.name_column %}
+
+        <button type="submit" class="save btn btn-default">Submit</button>
+    </form>
+
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
