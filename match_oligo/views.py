@@ -9,64 +9,81 @@ def reverse_complement(text):
     reverse_complement_text = text.translate(str.maketrans('ACGT','TGCA'))
     return reverse_complement_text
 
-from .forms import UploadFileForm, RefForm, ChrLocForm, ColumnDropForm
+from .forms import UploadFileForm, RefForm, ChrLocForm, ColumnDropForm, user_sequence_input
 #Access forms from match_oligo/forms.py
 
 def import_excel_view(request):
+    print("enter def")
     new_line_char = "--"
     new_line = 0
     #Adds a new line character between uploaded file information when new_line > 0
 
     if request.method == "POST":
     #if there is data to be submitted continue with script
-        form1 = UploadFileForm(request.POST, request.FILES)
-        form2 = RefForm(request.POST)
-        form3 = ChrLocForm(request.POST)
-        form4 = ColumnDropForm(request.POST)
+        print('enter if')
+
+        user_input_oligo = user_sequence_input(request.POST)
+        upload = UploadFileForm(request.POST, request.FILES)
+        reference = RefForm(request.POST)
+        chromosome_form = ChrLocForm(request.POST)
+        col_drop = ColumnDropForm(request.POST)
         #handles for user submitted data.
         ValidForm1 = False
-        #Grants entry into oligo search loop
-        if form1.is_valid() and (form4.is_valid()) and (form2.is_valid() or form3.is_valid()):
-        #Validates user input for oligo files and at least one reference
-            check = (form2.is_valid()), (form3.is_valid())
-            if form1.is_valid() and all(check):
-                raise forms.ValidationError('OOPS! You submitted two types of reference data. Either paste your reference or identify a chromosome location.')
-                #Raises error if there is user input for both references
-            if form1.is_valid():
-                oligo_input =  request.FILES.getlist('file')
-                #Accesses 'file' from match_oligo/forms.py and uses .getlist to access all items in the MultiValueDict
-                oligo_column_input = request.POST['oligo_column']
-                name_column_input = request.POST['name_column']
-                name_match_list = []
-                sheet_info_list = []
-                reference_info = []
-                #creates empty  list where  matches from all files will be stored
-                ValidForm1 = True
-                #Grants entry into oligo search loop if True
-            if form2.is_valid():
-                reference = (form2.cleaned_data['reference']).upper().replace(" ","")
-                #accesses validated form input
-                #reference = request.POST['reference'] #access unvalidated form input
-                rc_reference = reverse_complement(reference)
-                ref_length = str(len(reference))
-                reference_info.extend(("The following number of nucleotides were searched: {}".format(ref_length),))
-            elif form3.is_valid():
-                    chrom = request.POST['chr']
-                    loc_start = request.POST['loc_start']
-                    loc_stop = request.POST['loc_stop']
-                    #access user input for chromsome location
-                    url = "http://genome.ucsc.edu/cgi-bin/das/hg19/dna?segment=chr{}:{},{}".format(chrom, loc_start, loc_stop)
-                    chr_url = urllib.request.urlopen(url)
-                    chr_url_read = chr_url.read()
-                    chr_url_decode = chr_url_read.decode('utf-8')
-                    #open, read, and decode text from the UCSC das url
-                    chr_input = re.sub('<.+>', '', chr_url_decode)
-                    chr_input_strip = chr_input.replace('\n','')
-                    reference = chr_input_strip.upper().replace(" ", "")
-                    rc_reference = reverse_complement(reference)
-                    #remove all non-sequence text between <>, remove newline, and convert to all caps
-                    reference_info.extend(("Chromosome {}: {}-{}".format(chrom,loc_start,loc_stop),))
-                    reference_info.extend(("url: {}".format(url),))
+
+        # #Grants entry into oligo search loop
+        # if (upload.is_valid() or user_input_oligo.is_valid()) and (col_drop.is_valid()) and (reference.is_valid() or chromosome_form.is_valid()):
+        # #Validates user input for oligo files and at least one reference
+        #     check = (reference.is_valid()), (chromosome_form.is_valid())
+        #     if upload.is_valid() and all(check):
+        #         raise forms.ValidationError('OOPS! You submitted two types of reference data. Either paste your reference or identify a chromosome location.')
+        #         #Raises error if there is user input for both references
+        #     if upload.is_valid():
+
+
+        oligo_input =  request.FILES.getlist('file')
+        user_oligo_input = request.POST['sequence']
+        #Accesses 'file' from match_oligo/forms.py and uses .getlist to access all items in the MultiValueDict
+        oligo_column_input = request.POST['oligo_column']
+        name_column_input = request.POST['name_column']
+        name_match_list = []
+        sheet_info_list = []
+        reference_info = []
+        #creates empty  list where  matches from all files will be stored
+        ValidForm1 = True
+        #Grants entry into oligo search loop if True
+        #if reference.is_valid():
+        reference = request.POST['reference']
+           # (reference.cleaned_data['reference']).upper().replace(" ","")
+        #accesses validated form input
+        #reference = request.POST['reference'] #access unvalidated form input
+        rc_reference = reverse_complement(reference)
+        ref_length = str(len(reference))
+        reference_info.extend(("The following number of nucleotides were searched: {}".format(ref_length),))
+
+        chrom = request.POST['chr']
+        loc_start = request.POST['loc_start']
+        loc_stop = request.POST['loc_stop']
+        #access user input for chromsome location
+    #(chrom and loc_start and loc_stop) and
+        if (chrom and loc_start and loc_stop) == '':
+            if reference == '':
+                raise forms.ValidationError(
+                    'OOPS! You need to enter at least one reference.')
+            #         #Raises error if there is user input for both references
+        if (chrom and loc_start and loc_stop) != '':
+            print ('chrom pass')
+            url = "http://genome.ucsc.edu/cgi-bin/das/hg19/dna?segment=chr{}:{},{}".format(chrom, loc_start, loc_stop)
+            chr_url = urllib.request.urlopen(url)
+            chr_url_read = chr_url.read()
+            chr_url_decode = chr_url_read.decode('utf-8')
+            #open, read, and decode text from the UCSC das url
+            chr_input = re.sub('<.+>', '', chr_url_decode)
+            chr_input_strip = chr_input.replace('\n','')
+            reference = chr_input_strip.upper().replace(" ", "")
+            rc_reference = reverse_complement(reference)
+            #remove all non-sequence text between <>, remove newline, and convert to all caps
+            reference_info.extend(("Chromosome {}: {}-{}".format(chrom,loc_start,loc_stop),))
+            reference_info.extend(("url: {}".format(url),))
         if ValidForm1:
         #ValidForm1 is True if form1 (excel oligo input) is valid
             for xlsfile in oligo_input:
@@ -106,9 +123,12 @@ def import_excel_view(request):
                             #if file already has a match (saw_file > 0) match will be be displayed
                             new_line += 1
             return render(request, 'match_oligo/output.html', {'var': name_match_list, 'search_param': sheet_info_list, 'ref_info': reference_info})
+
     else:
-        form1 = UploadFileForm()
-        form2 = RefForm()
-        form3 = ChrLocForm()
-        form4 = ColumnDropForm()
-    return render(request, 'match_oligo/user_input.html', {'form1': form1, 'form2': form2, 'form3':form3, 'form4':form4, })
+        user_input_oligo = user_sequence_input()
+        reference = RefForm()
+        chromosome_form = ChrLocForm()
+        col_drop = ColumnDropForm()
+        upload = UploadFileForm()
+
+    return render(request, 'match_oligo/main2.html', {'reference': reference, 'chromosome_form': chromosome_form, 'user_input_oligo':user_input_oligo, 'col_drop':col_drop, 'upload':upload})
