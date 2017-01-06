@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
 from django import forms
 import xlrd
 import urllib.request
@@ -18,6 +16,15 @@ def mismatch (string1, string2):
             mismatches += 1
     return(mismatches)
 
+def exact_patterns(text, pattern):
+    pattern_location = ''
+    pattern_matches = ''
+    regex_pattern = re.compile('(?={0})'.format(pattern))
+    matches = regex_pattern.finditer(text)
+    for match in matches:
+        pattern_location += str(match.start())+','+'\t'
+    return(pattern_location, pattern_matches)
+
 def approximate_patterns(text, pattern, max_mismatches):
     text = text.upper().replace(" ","")
     pattern = pattern.upper().replace(" ","")
@@ -33,14 +40,15 @@ def approximate_patterns(text, pattern, max_mismatches):
             pattern_matches += '<i></i>'
             query_pattern = text[i:i+len(pattern)]
             add_base = False
+            last_base = len(text)
 
-            if mismatch(pattern, query_pattern) <= max_mismatches and not pattern_found:
+            if mismatch(pattern, query_pattern) <= max_mismatches and not pattern_found and len(query_pattern)==len(pattern):
                 pattern_matches += '<u><font color="red">'
                 pattern_found = True
                 pattern_end = i + (len(pattern)-1)
                 pattern_location += str(i+1)+','+'\t'
 
-            elif mismatch(pattern, query_pattern) <= max_mismatches and pattern_found:
+            elif mismatch(pattern, query_pattern) <= max_mismatches and pattern_found and len(query_pattern)==len(pattern):
                 pattern_end = i + (len(pattern)-1)
                 pattern_location += str(i+1)+','+'\t'
 
@@ -51,73 +59,91 @@ def approximate_patterns(text, pattern, max_mismatches):
                 add_base = True
                 pattern_found = False
 
+            if i == last_base-1 and pattern_found:
+                pattern_matches += '</u></font>'
+
             if not add_base:
                 pattern_matches += base
-            print (pattern_matches)
 
         return(pattern_location, pattern_matches )
 
-from .forms import UploadFileForm, RefForm, ChrLocForm, ColumnDropForm, user_sequence_input
+def approximate_patterns_oligo(text, pattern, max_mismatches):
+    text = text.upper().replace(" ","")
+    pattern = pattern.upper().replace(" ","")
+    pattern_matches = ''
+    pattern_location = ''
+    pattern_end = 0
+    pattern_found = False
+    add_base = False
+    oligo_found = 0
+    oligo_string = ''
+    if pattern == '':
+        return ('')
+    else:
+        for i, base in enumerate(text):
+            pattern_matches += '<i></i>'
+            query_pattern = text[i:i+len(pattern)]
+            add_base = False
+            last_base = len(text)
+            if mismatch(pattern, query_pattern) <= max_mismatches and not pattern_found and len(query_pattern)==len(pattern):
+                print('enter1')
+                pattern_matches += '<u><font color="red">'
+                pattern_found = True
+                pattern_end = i + (len(pattern)-1)
+                pattern_location += str(i+1)+','+'\t'
+                oligo_found += 1
+
+            elif mismatch(pattern, query_pattern) <= max_mismatches and pattern_found and len(query_pattern)==len(pattern):
+                print('enter2')
+                pattern_end = i + (len(pattern)-1)
+                pattern_location += str(i+1)+','+'\t'
+                oligo_found += 1
+
+            if i == pattern_end and pattern_found:
+                pattern_matches += base
+                pattern_matches +='</u></font>'
+                pattern_end = 0
+                add_base = True
+                pattern_found = False
+
+            if i == last_base-1 and pattern_found:
+                pattern_matches += '</u></font>'
+
+            if not add_base:
+                pattern_matches += base
+
+        return(oligo_found)
+
+from .forms import UploadFileForm, RefForm, ChrLocForm, ColumnDropForm, user_sequence_input, mismatch_input
 #Access forms from match_oligo/forms.py
 
 def import_excel_view(request):
-    print("enter def")
     new_line_char = "--"
     new_line = 0
     #Adds a new line character between uploaded file information when new_line > 0
 
     if request.method == "POST":
-    #if there is data to be submitted continue with script
-        print('enter if')
-
-        # user_input_oligo = user_sequence_input(request.POST)
-        # upload = UploadFileForm(request.POST, request.FILES)
-        # reference = RefForm(request.POST)
-        # chromosome_form = ChrLocForm(request.POST)
-        # col_drop = ColumnDropForm(request.POST)
-        #handles for user submitted data.
-        ValidForm1 = False
-
-
-        # #Grants entry into oligo search loop
-        # if (upload.is_valid() or user_input_oligo.is_valid()) and (col_drop.is_valid()) and (reference.is_valid() or chromosome_form.is_valid()):
-        # #Validates user input for oligo files and at least one reference
-        #     check = (reference.is_valid()), (chromosome_form.is_valid())
-        #     if upload.is_valid() and all(check):
-        #         raise forms.ValidationError('OOPS! You submitted two types of reference data. Either paste your reference or identify a chromosome location.')
-        #         #Raises error if there is user input for both references
-        #     if upload.is_valid():
-
 
         oligo_input =  request.FILES.getlist('file')
-        user_oligo_input = request.POST['sequence']
-        #Accesses 'file' from match_oligo/forms.py and uses .getlist to access all items in the MultiValueDict
+        # Accesses 'file' from match_oligo/forms.py and uses .getlist to access all items in the MultiValueDict
         oligo_column_input = request.POST['oligo_column']
         name_column_input = request.POST['name_column']
-        name_match_list = []
-        sheet_info_list = []
-        reference_info = []
-        #creates empty  list where  matches from all files will be stored
-        ValidForm1 = True
-        #Grants entry into oligo search loop if True
-        #if reference.is_valid():
+        mismatches_choice = int(request.POST.get('mismatches'))
         reference = request.POST['reference']
-           # (reference.cleaned_data['reference']).upper().replace(" ","")
-        #accesses validated form input
-        #reference = request.POST['reference'] #access unvalidated form input
-        rc_reference = reverse_complement(reference)
-        ref_length = str(len(reference))
-        reference_info.extend(("The following number of nucleotides were searched: {}".format(ref_length),))
-
         chrom = request.POST['chr']
         loc_start = request.POST['loc_start']
         loc_stop = request.POST['loc_stop']
         user_input_oligo = request.POST['sequence']
+        mismatch_form = request.POST['mismatches']
 
+        name_match_list = []
+        sheet_info_list = []
+        reference_info = []
+        #creates empty  list where  matches from all files will be stored
 
-
-
-
+        rc_reference = reverse_complement(reference)
+        ref_length = str(len(reference))
+        reference_info.extend(("The following number of nucleotides were searched: {}".format(ref_length),))
 
         if (chrom and loc_start and loc_stop) == '':
             if reference == '':
@@ -125,7 +151,6 @@ def import_excel_view(request):
                     'OOPS! You need to enter at least one reference.')
             #         #Raises error if there is user input for both references
         if (chrom and loc_start and loc_stop) != '':
-            print ('chrom pass')
             url = "http://genome.ucsc.edu/cgi-bin/das/hg19/dna?segment=chr{}:{},{}".format(chrom, loc_start, loc_stop)
             chr_url = urllib.request.urlopen(url)
             chr_url_read = chr_url.read()
@@ -137,7 +162,7 @@ def import_excel_view(request):
             rc_reference = reverse_complement(reference)
             #remove all non-sequence text between <>, remove newline, and convert to all caps
             reference_info.extend(("Chromosome {}: {}-{}".format(chrom,loc_start,loc_stop),))
-            reference_info.extend(("url: {}".format(url),))
+            reference_info.extend(("{}".format(url),))
         if oligo_input:
         #ValidForm1 is True if form1 (excel oligo input) is valid
             for xlsfile in oligo_input:
@@ -163,7 +188,23 @@ def import_excel_view(request):
                                 rowx=i,
                                 colx=int(oligo_column_input))
                                 .upper().replace(" ",""))
-                    if i < sheet.nrows and oligo != "" and ((oligo in reference) or (oligo in rc_reference)):
+                    #todo ignore special characters in search
+                    if i < sheet.nrows and oligo != "" and mismatches_choice != 0:
+                        name = sheet.cell_value(rowx=i, colx=int(name_column_input))
+                        name_match = str(name)
+                        if approximate_patterns_oligo(reference, oligo, mismatches_choice) > 0:
+                            print('pass approx patt')
+                            if saw_file < 1:
+                                xls_match_file_name = "{}:".format(xlsfile)
+                                name_match_list.extend((xls_match_file_name,))
+                                name_match_list.extend((name_match,))
+                                saw_file += 1
+                            else:
+                                name_match_list.extend((name_match,))
+                                # if file already has a match (saw_file > 0) match will be be displayed
+                                new_line += 1
+
+                    elif i < sheet.nrows and oligo != "" and ((oligo in reference) or (oligo in rc_reference)):
                         name = sheet.cell_value(rowx=i, colx=int(name_column_input))
                         name_match = str(name)
                         if saw_file < 1:
@@ -176,26 +217,34 @@ def import_excel_view(request):
                             name_match_list.extend((name_match,))
                             #if file already has a match (saw_file > 0) match will be be displayed
                             new_line += 1
-            return render(request, 'match_oligo/output.html', {'var': name_match_list, 'search_param': sheet_info_list, 'ref_info': reference_info})
-
-        if user_input_oligo != '':
-            # mismatch_choice = int(request.POST['mismatches'])
-            # text = (form1.cleaned_data['sequence'])
-            # pattern = (form2.cleaned_data['pattern'])
-            bold = approximate_patterns(reference, user_input_oligo, 0)
             user_input_oligo = user_sequence_input()
             reference = RefForm()
             chromosome_form = ChrLocForm()
             col_drop = ColumnDropForm()
             upload = UploadFileForm()
+            mismatch_form = mismatch_input()
+            return render(request, 'match_oligo/main2excel.html', {'var': name_match_list, 'search_param': sheet_info_list, 'ref_info': reference_info, 'reference': reference, 'chromosome_form': chromosome_form,
+                          'user_input_oligo': user_input_oligo, 'col_drop': col_drop, 'upload': upload, 'mismatch_form':mismatch_form})
+
+        if user_input_oligo != '':
+            bold = approximate_patterns(reference, user_input_oligo, mismatches_choice)
+
+            reference_form = RefForm()
+            chromosome_form = ChrLocForm()
+            col_drop = ColumnDropForm()
+            upload = UploadFileForm()
+            mismatch = mismatch_input()
+            user_input_oligo = user_sequence_input()
             return render(request, 'match_oligo/main2result.html',
-                         {'bold': bold, 'reference': reference, 'chromosome_form': chromosome_form,
-                          'user_input_oligo': user_input_oligo, 'col_drop': col_drop, 'upload': upload})
+                         {'bold': bold, 'reference_form': reference_form, 'chromosome_form': chromosome_form,
+                          'user_input_oligo': user_input_oligo, 'col_drop': col_drop, 'upload': upload, 'mismatch':mismatch})
     else:
         user_input_oligo = user_sequence_input()
         reference = RefForm()
         chromosome_form = ChrLocForm()
         col_drop = ColumnDropForm()
         upload = UploadFileForm()
+        mismatch = mismatch_input()
 
-    return render(request, 'match_oligo/main2.html', {'reference': reference, 'chromosome_form': chromosome_form, 'user_input_oligo':user_input_oligo, 'col_drop':col_drop, 'upload':upload})
+
+    return render(request, 'match_oligo/main2.html', {'reference': reference, 'chromosome_form': chromosome_form, 'user_input_oligo':user_input_oligo, 'col_drop':col_drop, 'upload':upload, 'mismatch':mismatch})

@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     {% load widget_tweaks %}
+    {% load staticfiles %}
     <meta charset="UTF-8">
     <title>MolBio Tools</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'match_oligo/css/bootstrap.min.css' %}" type = "text/css"/>
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
@@ -31,7 +33,7 @@
     <div class="w3-twothird">
 
         <h1>Reference</h1>
-        <h5 class="w3-padding-4">Find alignments within a reference sequence. You will have the option to designate the number of allowed mismatches.</h5>
+        <h5 class="w3-padding-4">Find alignments within a reference sequence. You will have the option to designate the number of allowed mismatches. Special character and caps will be ignored. Reverse compliment is also searched.</h5>
         <h5 class="w3-padding-4">Copy and paste your reference sequence here.</h5>
 
     <form class="uniForm" enctype="multipart/form-data" method="POST">
@@ -42,7 +44,7 @@
 
 
     <h3 class="w3-padding-10">Or </h3>
-      <h5 class="w3-padding-10"> Type the chromosome number, start and stop location. This will access the hg19 genome of the UCSC DAS database.</h5>
+      <h5 class="w3-padding-10"> Enter a location in the human genome. This will access the hg19 genome of the UCSC DAS database.</h5>
 
 
        {% render_field chromosome_form.chr%}
@@ -68,27 +70,41 @@
     </div>
 
     <div class="w3-twothird">
-      <h1>Oligo</h1>
-      <h5 class="w3-padding-0">Enter a sequence to search for within the above reference. </h5>
-        <h5 class="w3-padding-4">Special character and caps will be ignored. Reverse compliment is also searched. </h5>
-
+      <h1>Oligonucleotide</h1>
+        <h5 class="w3-padding-0">How many mismatches are allowed?
+            {% render_field mismatch.mismatches %}
+        </h5>
+        <h5 class="w3-padding-0">What sequence would you like to find within the reference? </h5>
 
            {% render_field user_input_oligo.sequence rows="1" cols="60"%}
+
 
     <h3 class="w3-padding-10">Or </h3>
 
       <h5 class="w3-padding-10"> Upload excel document(s).</h5>
 
-
        {% render_field upload.file %}
 
 
+<div class="w3-content" style="max-width:1532px;">
+    <br>
+<h8 class="w3-padding">Select the column for the oligo and the name of the oligo.</h8>
+    <br>
+<h8 class="w3-padding"> Default is C for oligo and A for name. </h8>
+    </div>
+
+  <div class = "form-inline w3-content w3-padding">
+
+        {{ col_drop }}
+
+    </div>
 
 
-        {% render_field col_drop.oligo_column %}
-        {% render_field col_drop.name_column %}
+    <div class="w3-row-padding">
+        <br>
+        <button type="submit" class="btn btn-lg btn-danger">Submit</button>
+        </div>
 
-        <button type="submit" class="save btn btn-default">Submit</button>
     </form>
 
     </div>

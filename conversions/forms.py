@@ -15,6 +15,6 @@ mismatch_choices = (
     (5, 5),
 )
 
+
 class mismatch_input(forms.Form):
     mismatches = forms.ChoiceField(choices=mismatch_choices, required=True, label='Number of mismatches allowed:')
-
