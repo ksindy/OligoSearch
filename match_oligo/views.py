@@ -86,7 +86,6 @@ def approximate_patterns_oligo(text, pattern, max_mismatches):
             add_base = False
             last_base = len(text)
             if mismatch(pattern, query_pattern) <= max_mismatches and not pattern_found and len(query_pattern)==len(pattern):
-                print('enter1')
                 pattern_matches += '<u><font color="red">'
                 pattern_found = True
                 pattern_end = i + (len(pattern)-1)
@@ -94,7 +93,6 @@ def approximate_patterns_oligo(text, pattern, max_mismatches):
                 oligo_found += 1
 
             elif mismatch(pattern, query_pattern) <= max_mismatches and pattern_found and len(query_pattern)==len(pattern):
-                print('enter2')
                 pattern_end = i + (len(pattern)-1)
                 pattern_location += str(i+1)+','+'\t'
                 oligo_found += 1
@@ -149,7 +147,12 @@ def import_excel_view(request):
             if reference == '':
                 raise forms.ValidationError(
                     'OOPS! You need to enter at least one reference.')
-            #         #Raises error if there is user input for both references
+
+        if (chrom and loc_start and loc_stop) != '':
+            if reference != '':
+                raise forms.ValidationError(
+                    'OOPS! There are two references. Either copy and paste a reference or enter the chromosome location.')
+
         if (chrom and loc_start and loc_stop) != '':
             url = "http://genome.ucsc.edu/cgi-bin/das/hg19/dna?segment=chr{}:{},{}".format(chrom, loc_start, loc_stop)
             chr_url = urllib.request.urlopen(url)
@@ -163,6 +166,11 @@ def import_excel_view(request):
             #remove all non-sequence text between <>, remove newline, and convert to all caps
             reference_info.extend(("Chromosome {}: {}-{}".format(chrom,loc_start,loc_stop),))
             reference_info.extend(("{}".format(url),))
+
+        if not oligo_input and user_input_oligo == '':
+            raise forms.ValidationError(
+                'OOPS! You need to enter at least one item to search. Either copy and paste an oligonucleotide or upload an excel file.')
+
         if oligo_input:
         #ValidForm1 is True if form1 (excel oligo input) is valid
             for xlsfile in oligo_input:
@@ -193,7 +201,6 @@ def import_excel_view(request):
                         name = sheet.cell_value(rowx=i, colx=int(name_column_input))
                         name_match = str(name)
                         if approximate_patterns_oligo(reference, oligo, mismatches_choice) > 0:
-                            print('pass approx patt')
                             if saw_file < 1:
                                 xls_match_file_name = "{}:".format(xlsfile)
                                 name_match_list.extend((xls_match_file_name,))
