@@ -140,8 +140,9 @@ def import_excel_view(request):
         #creates empty  list where  matches from all files will be stored
 
         rc_reference = reverse_complement(reference)
-        ref_length = str(len(reference))
-        reference_info.extend(("The following number of nucleotides were searched: {}".format(ref_length),))
+        if reference != '':
+            ref_length = str(len(reference))
+            reference_info.extend(("The following number of nucleotides were searched: {}".format(ref_length),))
 
         if (chrom and loc_start and loc_stop) == '':
             if reference == '':
