@@ -198,6 +198,8 @@ def import_excel_view(request):
                                 colx=int(oligo_column_input))
                                 .upper().replace(" ",""))
                     #todo ignore special characters in search
+                    #todo reference stay the same length as query
+                    #todo add location to excel output
                     if i < sheet.nrows and oligo != "" and mismatches_choice != 0:
                         name = sheet.cell_value(rowx=i, colx=int(name_column_input))
                         name_match = str(name)
