@@ -174,6 +174,9 @@ def import_excel_view(request):
             raise forms.ValidationError(
                 'OOPS! You need to enter at least one item to search. Either copy and paste an oligonucleotide or upload an excel file.')
 
+        if oligo_input and user_input_oligo != '':
+            raise forms.ValidationError(
+                'OOPS! There are two oligonucleotide sources. Either manually enter a sequence or upload an excel sheet.')
         if oligo_input:
         #ValidForm1 is True if form1 (excel oligo input) is valid
             for xlsfile in oligo_input:
