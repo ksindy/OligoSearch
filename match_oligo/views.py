@@ -201,9 +201,7 @@ def import_excel_view(request):
                                 .upper().replace(" ",""))
                     regex = re.compile('[^agctuAGCTU]')
                     oligo = regex.sub('', oligo)
-                    #todo mismatch form missing on result page
-                    #todo reference stay the same length as query
-                    #todo add location to excel output
+                    #todo add reference location to excel output
                     if i < sheet.nrows and oligo != "" and mismatches_choice != 0:
                         name = sheet.cell_value(rowx=i, colx=int(name_column_input))
                         name_match = str(name)
@@ -237,8 +235,9 @@ def import_excel_view(request):
             col_drop = ColumnDropForm()
             upload = UploadFileForm()
             mismatch_form = mismatch_input()
+            mismatch = mismatch_input()
             return render(request, 'match_oligo/main2excel.html', {'var': name_match_list, 'search_param': sheet_info_list, 'ref_info': reference_info, 'reference': reference, 'chromosome_form': chromosome_form,
-                          'user_input_oligo': user_input_oligo, 'col_drop': col_drop, 'upload': upload, 'mismatch_form':mismatch_form})
+                          'user_input_oligo': user_input_oligo, 'col_drop': col_drop, 'upload': upload, 'mismatch_form':mismatch_form, 'mismatch':mismatch})
 
         if user_input_oligo != '':
             bold = approximate_patterns(reference, user_input_oligo, mismatches_choice)
