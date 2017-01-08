@@ -28,6 +28,8 @@ def exact_patterns(text, pattern):
 def approximate_patterns(text, pattern, max_mismatches):
     text = text.upper().replace(" ","")
     pattern = pattern.upper().replace(" ","")
+    regex = re.compile('[^agctuAGCTU]')
+    pattern = regex.sub('', pattern)
     pattern_matches = ''
     pattern_location = ''
     pattern_end = 0
@@ -197,7 +199,9 @@ def import_excel_view(request):
                                 rowx=i,
                                 colx=int(oligo_column_input))
                                 .upper().replace(" ",""))
-                    #todo ignore special characters in search
+                    regex = re.compile('[^agctuAGCTU]')
+                    oligo = regex.sub('', oligo)
+                    #todo mismatch form missing on result page
                     #todo reference stay the same length as query
                     #todo add location to excel output
                     if i < sheet.nrows and oligo != "" and mismatches_choice != 0:
