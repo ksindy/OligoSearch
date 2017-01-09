@@ -61,8 +61,7 @@
 
     <form class="uniForm" enctype="multipart/form-data" method="POST">
         {% csrf_token %}
-        {% render_field chromosome_form.reference rows="6" cols="78" %}
-
+        {% render_field reference_url_form.reference rows="6" cols="78" %}
 
 
 
@@ -70,9 +69,9 @@
       <h5 class="w3-padding-10"> Enter a location in the human genome. This will access the hg19 genome of the UCSC DAS database.</h5>
 
 
-       {% render_field chromosome_form.chr%}
-       {% render_field chromosome_form.loc_start%}
-       {% render_field chromosome_form.loc_stop%}
+       {% render_field reference_url_form.chr%}
+       {% render_field reference_url_form.loc_start%}
+       {% render_field reference_url_form.loc_stop%}
 
 
 
@@ -95,18 +94,18 @@
     <div class="w3-twothird">
       <h1>Pattern</h1>
         <h5 class="w3-padding-0">How many mismatches are allowed?
-            {% render_field mismatch.mismatches %}
+            {% render_field mismatch_form.mismatches %}
         </h5>
         <h5 class="w3-padding-0">What sequence would you like to find within the reference? </h5>
 
-           {% render_field user_input_oligo.sequence rows="1" cols="60"%}
+           {% render_field oligo_input_form.sequence rows="1" cols="60"%}
 
 
     <h3 class="w3-padding-10">Or </h3>
 
       <h5 class="w3-padding-10"> Upload oligo excel document(s).</h5>
 
-       {% render_field upload.file %}
+       {% render_field oligo_excel_form.file %}
 
 
 <div class="w3-content" style="max-width:1532px;">
@@ -118,7 +117,7 @@
 
   <div class = "form-inline w3-content w3-padding">
 
-        {{ col_drop }}
+        {{ column_name_choice }}
 
     </div>
 

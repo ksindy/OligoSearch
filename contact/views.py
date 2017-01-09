@@ -1,9 +1,9 @@
-from django.shortcuts import render
-
-from django.shortcuts import render, redirect
-from django import forms
-
-from .forms import NameForm
+# from django.shortcuts import render
+#
+# from django.shortcuts import render, redirect
+# from django import forms
+#
+# from .forms import NameForm
 
 
 def name_input(request):

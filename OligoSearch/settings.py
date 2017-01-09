@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'contact',
     'crispy_forms',
     'match_oligo',
     'conversions',
