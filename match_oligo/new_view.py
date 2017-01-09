@@ -111,6 +111,19 @@ def approximate_patterns_oligo(text, pattern, max_mismatches):
 
         return(oligo_found)
 
+def symbol_to_number(symbol):
+    dict_symbol = {'A':0, 'C':1, 'G':2, 'T':3}
+    return dict_symbol[symbol]
+
+def pattern_to_number(pattern):
+    if not pattern:
+        return 0
+    symbol = pattern[-1]
+    prefix = pattern[0:-1]
+    return 4*pattern_to_number(prefix) + symbol_to_number(symbol)
+
+print(pattern_to_number(pattern))
+
 from .forms import UploadFileForm, RefForm, ChrLocForm, ColumnDropForm, user_sequence_input, mismatch_input
 #Access forms from match_oligo/forms.py
 
