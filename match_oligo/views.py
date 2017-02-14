@@ -3,7 +3,9 @@ from django import forms
 import xlrd
 import urllib.request
 import re
+from tinydb import TinyDB
 
+db = TinyDB('/Users/ksindy/PycharmProjects/oligo_search_website/reference_dict.json')
 def reverse_complement(text):
     text = text[::-1].upper().replace(' ','')
     reverse_complement_text = text.translate(str.maketrans('ACGT','TGCA'))
@@ -83,7 +85,12 @@ def pattern_to_number(pattern):
     prefix = pattern[0:-1]
     return 4*pattern_to_number(prefix) + symbol_to_number(symbol)
 
+def reference_dict(length_pattern, reference):
+    query_dict = {}
+    for i, nucleotide in enumerate(reference):
+        query = reference[i:i+length_pattern]
 
+    db.insert(query_dict)
 
 from .forms import UploadFileForm, RefForm, ChrLocForm, ColumnDropForm, user_sequence_input, mismatch_input
 #Access forms from match_oligo/forms.py
@@ -194,6 +201,8 @@ def import_excel_view(request):
                         # continue if index is less than the rows, cell is not empty, and at least 1 mismatch
                         name = sheet.cell_value(rowx=i, colx=int(name_column_input))
                         name_match = str(name)
+                        reference_dict(len(oligo),reference)
+
                         
                         if approximate_patterns_oligo(reference, oligo, mismatches_choice) > 0:
                             
