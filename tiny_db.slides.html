@@ -11833,31 +11833,13 @@ a.anchor-link {
 <h1 id="TinyDB-in-action!">TinyDB in action!<a class="anchor-link" href="#TinyDB-in-action!">&#182;</a></h1>
 </div>
 </div>
-</div></section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Using-TinyDB-to-speed-up-an-alignment-algorithm.">Using TinyDB to speed up an alignment algorithm.<a class="anchor-link" href="#Using-TinyDB-to-speed-up-an-alignment-algorithm.">&#182;</a></h3>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Here-is-an-example-of-an-alignment:">Here is an example of an alignment:<a class="anchor-link" href="#Here-is-an-example-of-an-alignment:">&#182;</a></h3><h4 id="Does-the-pattern-&quot;cac&quot;-occur-in-the-following-sequence?">Does the pattern "cac" occur in the following sequence?<a class="anchor-link" href="#Does-the-pattern-&quot;cac&quot;-occur-in-the-following-sequence?">&#182;</a></h4><h4 id="cactaagcacacagagaata">cactaagcacacagagaata<a class="anchor-link" href="#cactaagcacacagagaata">&#182;</a></h4>
-</div>
-</div>
 </div><div class="fragment">
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="yes!">yes!<a class="anchor-link" href="#yes!">&#182;</a></h4><h4 id="cac-taag-cacac-agagaata"><em>cac</em> taag <em>cacac</em> agagaata<a class="anchor-link" href="#cac-taag-cacac-agagaata">&#182;</a></h4>
+<h3 id="TinyDB-helped-make-my-alignment-algorithm-faster.">TinyDB helped make my alignment algorithm faster.<a class="anchor-link" href="#TinyDB-helped-make-my-alignment-algorithm-faster.">&#182;</a></h3>
 </div>
 </div>
 </div></div></section></section><section><section>
@@ -11866,7 +11848,25 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="A-very-fast-way-to-determine-if-a-pattern-is-present-in-the-reference:">A very fast way to determine if a pattern is present in the reference:<a class="anchor-link" href="#A-very-fast-way-to-determine-if-a-pattern-is-present-in-the-reference:">&#182;</a></h4>
+<h3 id="An-example-of-an-alignment:">An example of an alignment:<a class="anchor-link" href="#An-example-of-an-alignment:">&#182;</a></h3><h3 id="Does-the-pattern-&quot;cac&quot;-occur-in-the-following-sequence?">Does the pattern "cac" occur in the following sequence?<a class="anchor-link" href="#Does-the-pattern-&quot;cac&quot;-occur-in-the-following-sequence?">&#182;</a></h3><h3 id="cactaagcacacagagaata">cactaagcacacagagaata<a class="anchor-link" href="#cactaagcacacagagaata">&#182;</a></h3>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="yes!">yes!<a class="anchor-link" href="#yes!">&#182;</a></h3><h3 id="cac-taag-cacac-agagaata"><em>cac</em> taag <em>cacac</em> agagaata<a class="anchor-link" href="#cac-taag-cacac-agagaata">&#182;</a></h3>
+</div>
+</div>
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Here-is-a-fast-algroithm-to-determine-if-a-pattern-is-found-in-a-reference.">Here is a fast algroithm to determine if a pattern is found in a reference.<a class="anchor-link" href="#Here-is-a-fast-algroithm-to-determine-if-a-pattern-is-found-in-a-reference.">&#182;</a></h3>
 </div>
 </div>
 </div><div class="fragment">
@@ -11877,7 +11877,7 @@ a.anchor-link {
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">find_in</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">reference</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;yes&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;Yes&quot;</span>
 </pre></div>
 
 </div>
@@ -11904,7 +11904,125 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">find_in</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">pattern</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">find_in</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;Yes&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Great!-But-this-does-not-give-us-location-information-or-allow-us-to-perform-fuzzy-alignments.">Great! But this does not give us location information or allow us to perform fuzzy alignments.<a class="anchor-link" href="#Great!-But-this-does-not-give-us-location-information-or-allow-us-to-perform-fuzzy-alignments.">&#182;</a></h3>
+</div>
+</div>
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="This-function-iterates-through-the-referene-using-a-'window'-the-same-size-as-the-pattern.">This function iterates through the referene using a 'window' the same size as the pattern.<a class="anchor-link" href="#This-function-iterates-through-the-referene-using-a-'window'-the-same-size-as-the-pattern.">&#182;</a></h3>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">pattern_find</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+    <span class="n">pattern_location</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Creates empty list to store location of alignments. </span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">base</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="n">query_pattern</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)]</span>  <span class="c1"># &quot;Window&quot; used for search.</span>
+        <span class="k">if</span> <span class="n">query_pattern</span> <span class="o">==</span> <span class="n">pattern</span><span class="p">:</span>
+            <span class="n">pattern_location</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> 
+    <span class="k">return</span><span class="p">(</span><span class="n">pattern_location</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pattern_find</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[0, 7, 9, 72, 74]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="This-is-slow-when-there-are-lots-(hundreds)-of-patterns-to-be-quered-because-it-has-to-iterate-step-wise-through-the-reference-for-each-pattern.">This is slow when there are lots (hundreds) of patterns to be quered because it has to iterate step-wise through the reference for each pattern.<a class="anchor-link" href="#This-is-slow-when-there-are-lots-(hundreds)-of-patterns-to-be-quered-because-it-has-to-iterate-step-wise-through-the-reference-for-each-pattern.">&#182;</a></h3>
+</div>
+</div>
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pattern_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;acac&#39;</span><span class="p">,</span><span class="s1">&#39;cag&#39;</span><span class="p">,</span><span class="s1">&#39;ttat&#39;</span><span class="p">,</span><span class="s1">&#39;agaa&#39;</span><span class="p">,</span><span class="s1">&#39;ttatcaaatt&#39;</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">pattern_list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">pattern_find</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)))</span>
 </pre></div>
 
 </div>
@@ -11917,7 +12035,11 @@ a.anchor-link {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>yes
+<pre>acac [8, 73]
+cag [11, 68, 76]
+ttat [43]
+agaa [14, 26]
+ttatcaaatt [43]
 </pre>
 </div>
 </div>
@@ -11925,22 +12047,196 @@ a.anchor-link {
 </div>
 </div>
 
-</div></div><div class="fragment">
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Does-not-tell-where-the-match-occurs-or-allow-for-mismatches.">Does not tell where the match occurs or allow for mismatches.<a class="anchor-link" href="#Does-not-tell-where-the-match-occurs-or-allow-for-mismatches.">&#182;</a></h4>
-</div>
-</div>
 </div></div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">mismatch</span> <span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tinydb</span> <span class="k">import</span> <span class="n">TinyDB</span><span class="p">,</span> <span class="n">Query</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">json</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">TinyDB</span><span class="p">(</span><span class="s1">&#39;/Users/ksindy/PycharmProjects/oligo_search_website/pratice_db.json&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">pattern_find_tinydb</span><span class="p">(</span><span class="n">pattern_list</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">aligns</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Creates empty list to store alignments</span>
+    <span class="n">pattern_length_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Creates empty list to store pattern lengths</span>
+    <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">pattern_list</span><span class="p">:</span>  
+        
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        DETERMINE LENGTH OF PATTERN</span>
+<span class="sd">        Do not need to add to db if pattern length already seen</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pattern_length_list</span><span class="p">:</span>  
+            <span class="n">pattern_length_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">))</span>
+            
+            <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            ADD REFERENCE TO DATABASE</span>
+<span class="sd">            Splits reference into pattern length chunks and adds to the db </span>
+<span class="sd">            along with location (i).</span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nucleotide</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">reference</span><span class="p">):</span>  
+                <span class="n">ref_chunk</span> <span class="o">=</span> <span class="n">reference</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)]</span>  
+                <span class="n">db</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s1">&#39;sequence&#39;</span><span class="p">:</span> <span class="n">ref_chunk</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">})</span>  
+        
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        FIND ALIGNMENTS</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">sequence_match</span> <span class="o">=</span> <span class="n">Query</span><span class="p">()</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sequence_match</span><span class="o">.</span><span class="n">sequence</span> <span class="o">==</span> <span class="n">pattern</span><span class="p">)</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+        <span class="n">locations</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">r&#39;\d+&#39;</span><span class="p">,</span> <span class="n">matches</span><span class="p">)</span>
+        <span class="n">aligns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">locations</span><span class="p">))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">aligns</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pattern_find_tinydb</span><span class="p">(</span><span class="n">pattern_list</span><span class="p">,</span> <span class="n">reference</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[42]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#34;acac [&#39;9&#39;, &#39;74&#39;]&#34;,
+ &#34;cag [&#39;12&#39;, &#39;69&#39;, &#39;77&#39;]&#34;,
+ &#34;ttat [&#39;44&#39;]&#34;,
+ &#34;agaa [&#39;15&#39;, &#39;27&#39;]&#34;,
+ &#34;ttatcaaatt [&#39;44&#39;]&#34;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">purge</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">pattern_find_tinydb</span><span class="p">(</span><span class="n">pattern_list</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">aligns</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Creates empty list to store alignments</span>
+    <span class="n">pattern_length_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Creates empty list to store pattern lengths</span>
+    <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">pattern_list</span><span class="p">:</span>  
+        
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        DETERMINE LENGTH OF PATTERN</span>
+<span class="sd">        Do not need to add to db if pattern length already seen</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pattern_length_list</span><span class="p">:</span>  
+            <span class="n">pattern_length_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">))</span>
+            
+            <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            ADD REFERENCE TO DATABASE</span>
+<span class="sd">            Splits reference into pattern length chunks and adds to the db </span>
+<span class="sd">            along with location (i).</span>
+<span class="sd">            [{&#39;sequence&#39;: &#39;cact&#39;, &#39;index&#39;: 1}]</span>
+<span class="sd">            [{&#39;sequence&#39;: &#39;cact&#39;, &#39;index&#39;: 1}, {&#39;sequence&#39;: &#39;acta&#39;, &#39;index&#39;: 2}]</span>
+<span class="sd">            ...</span>
+<span class="sd">            [{&#39;sequence&#39;: &#39;cac&#39;, &#39;index&#39;: 1}]</span>
+<span class="sd">            [{&#39;sequence&#39;: &#39;cac&#39;, &#39;index&#39;: 1}, {&#39;sequence&#39;: &#39;act&#39;, &#39;index&#39;: 2}]</span>
+<span class="sd">            </span>
+<span class="sd">            &#39;&#39;&#39;</span>
+            
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nucleotide</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">reference</span><span class="p">):</span>  
+                <span class="n">ref_chunk</span> <span class="o">=</span> <span class="n">reference</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">pattern</span><span class="p">)]</span>  
+                <span class="n">db</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s1">&#39;sequence&#39;</span><span class="p">:</span> <span class="n">ref_chunk</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">})</span> 
+        
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        FIND ALIGNMENTS</span>
+<span class="sd">        [{&quot;sequence&quot;: &quot;acac&quot;, &quot;index&quot;: 9}, {&quot;sequence&quot;: &quot;acac&quot;, &quot;index&quot;: 74}]</span>
+<span class="sd">        [{&quot;sequence&quot;: &quot;cag&quot;, &quot;index&quot;: 12}, {&quot;sequence&quot;: &quot;cag&quot;, &quot;index&quot;: 69}...</span>
+<span class="sd">        [{&quot;sequence&quot;: &quot;ttat&quot;, &quot;index&quot;: 44}]</span>
+<span class="sd">        [{&quot;sequence&quot;: &quot;agaa&quot;, &quot;index&quot;: 15}, {&quot;sequence&quot;: &quot;agaa&quot;, &quot;index&quot;: 27}]</span>
+<span class="sd">        [{&quot;sequence&quot;: &quot;ttatcaaatt&quot;, &quot;index&quot;: 44}]</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">sequence_match</span> <span class="o">=</span> <span class="n">Query</span><span class="p">()</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">sequence_match</span><span class="o">.</span><span class="n">sequence</span> <span class="o">==</span> <span class="n">pattern</span><span class="p">)</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+        <span class="n">locations</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">r&#39;\d+&#39;</span><span class="p">,</span> <span class="n">matches</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
+        <span class="n">aligns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">locations</span><span class="p">))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">aligns</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">mismatch</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">):</span>
     <span class="n">mismatches</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="p">(</span><span class="n">nucleotide1</span><span class="p">,</span> <span class="n">nucleotide2</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">nucleotide1</span> <span class="o">!=</span> <span class="n">nucleotide2</span><span class="p">:</span>
@@ -11952,7 +12248,7 @@ a.anchor-link {
 </div>
 </div>
 
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
@@ -12003,22 +12299,9 @@ a.anchor-link {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">reference</span> <span class="o">=</span> <span class="s1">&#39;cactaagcacacagagaataatgtctagaatctgagtgccatgttatcaaattgtactgagactcttgcagtcacacaggct&#39;</span>
-<span class="n">pattern_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;acac&#39;</span><span class="p">,</span><span class="s1">&#39;cag&#39;</span><span class="p">]</span>
+<span class="n">pattern_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;acac&#39;</span><span class="p">,</span><span class="s1">&#39;cag&#39;</span><span class="p">,</span> <span class="s1">&#39;gtctagaat&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
 <span class="n">pattern_list_2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;*BIOTIN*-ACAC&#39;</span><span class="p">,</span> <span class="s1">&#39;TGTC&#39;</span><span class="p">,</span> <span class="s1">&#39;aaa&#39;</span><span class="p">,</span> <span class="s1">&#39;act gag act ctt gc&#39;</span><span class="p">]</span>
 <span class="n">pattern_length_list</span> <span class="o">=</span> <span class="p">[]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">TinyDB</span><span class="p">(</span><span class="s1">&#39;/Users/ksindy/PycharmProjects/oligo_search_website/pratice_db.json&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12108,32 +12391,6 @@ a.anchor-link {
 </div>
 </div>
 
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-</div>
 </div>
 </div>
 
